@@ -16,7 +16,9 @@ mp_holistic = mp.solutions.holistic # Mediapipe Solutions
 column_names = list()
 for val in range(1, 22):
     column_names += ['x{}'.format(val), 'y{}'.format(val), 'z{}'.format(val)]
+
 cap = cv2.VideoCapture(0)
+
 # Initiate holistic model
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     
@@ -84,7 +86,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
         except:
             pass
                         
-        cv2.imshow('Raw Webcam Feed', image)
+        cv2.imshow('Sign Detector', image)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break

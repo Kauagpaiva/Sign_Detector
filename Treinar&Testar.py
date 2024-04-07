@@ -1,40 +1,33 @@
-from sklearn.pipeline import make_pipeline 
 from sklearn.preprocessing import StandardScaler 
-from sklearn.linear_model import LogisticRegression, RidgeClassifier
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 import pickle 
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 ### Lendo o .CSV
-df = pd.read_csv('coordsHands.csv')
+df = pd.read_csv('Dataset.csv')
 
 ### Separando as colunas
-X = df.drop('class', axis=1) # features
+x = df.drop('class', axis=1) # features
 y = df['class'] # target value
 
+### Arrumando a escala dos valores
+StdSc = StandardScaler()
+StdSc = StdSc.fit(x)
+x = StdSc.transform(x)
+
 ### Separando o conjunto de treino e de teste
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1234)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=1234)
 
-### Treinando os classificadores
-pipelines = {
-    'lr':make_pipeline(StandardScaler(), LogisticRegression()),
-    'rc':make_pipeline(StandardScaler(), RidgeClassifier()),
-    'rf':make_pipeline(StandardScaler(), RandomForestClassifier()),
-    'gb':make_pipeline(StandardScaler(), GradientBoostingClassifier()),
-}
+### Treinando o classificador
+rfClassifier = RandomForestClassifier()
+rfClassifier.fit(x_train, y_train)
 
-fit_models = {}
-for algo, pipeline in pipelines.items():
-    model = pipeline.fit(X_train, y_train)
-    fit_models[algo] = model
+rfPredictions = rfClassifier.predict(x_test)
+rfScore = accuracy_score(y_test, rfPredictions)
+print("RF Score was: ", rfScore)
 
-### Avaliando o desempenho dos classificadores
-for algo, model in fit_models.items():
-    yhat = model.predict(X_test)
-    print(algo, accuracy_score(y_test, yhat))
-
-### Exportando o classificador de melhor desempenho
+### Exportando o classificador
 with open('signs.pkl', 'wb') as f:
-    pickle.dump(fit_models['rf'], f)
+    pickle.dump(rfClassifier, f)

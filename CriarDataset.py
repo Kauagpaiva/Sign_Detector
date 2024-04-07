@@ -7,8 +7,9 @@ import numpy as np
 mp_drawing = mp.solutions.drawing_utils # Drawing helpers
 mp_holistic = mp.solutions.holistic # Mediapipe Solutions
 
-class_name = "paz&amor"
+class_name = input("Qual sinal você deseja adicionar?")
 cap = cv2.VideoCapture(0)
+
 # Initiate holistic model
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     
@@ -40,14 +41,14 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
             row.insert(0, class_name)
             
             # Export to CSV
-            with open('coordsHands.csv', mode='a', newline='') as f:
+            with open('Dataset.csv', mode='a', newline='') as f:
                 csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 csv_writer.writerow(row) 
             
         except:
             pass
 
-        cv2.imshow('Raw Webcam Feed', image)
+        cv2.imshow('Saving', image)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
