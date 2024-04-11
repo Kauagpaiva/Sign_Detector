@@ -7,7 +7,7 @@ import numpy as np
 mp_drawing = mp.solutions.drawing_utils # Drawing helpers
 mp_holistic = mp.solutions.holistic # Mediapipe Solutions
 
-class_name = input("Qual sinal você deseja adicionar?")
+class_name = "Girar"
 cap = cv2.VideoCapture(0)
 
 # Initiate holistic model
