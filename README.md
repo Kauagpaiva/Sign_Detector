@@ -1,2 +1,2 @@
 # Sign_Detector
-Using computer vision techniques to classify hand signs 
+Python sign detector and classifier using MediaPipe and Sklearn RandomForestClassifier 
