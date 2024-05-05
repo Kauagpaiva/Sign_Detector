@@ -1,8 +1,6 @@
 import pickle 
 import mediapipe as mp # Import mediapipe
 import cv2 # Import opencv
-import csv
-import os
 import numpy as np
 import pandas as pd
 
