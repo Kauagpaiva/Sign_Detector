@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 
-with open('signs.pkl', 'rb') as f:
+with open('models/signs.pkl', 'rb') as f:
     model = pickle.load(f)
 
 mp_drawing = mp.solutions.drawing_utils # Drawing helpers
